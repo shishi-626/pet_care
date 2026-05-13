@@ -277,7 +277,7 @@ export default function Home() {
       <section className="hero" id="top">
         <div className="hero-copy">
           <p className="eyebrow">精品宠物洗护预约</p>
-          <h1>让每一只毛孩子，都被温柔洗亮。</h1>
+          <h1 className="hero-title">毛孩温柔洗亮</h1>
           <p className="hero-text">
             泡泡爪专注猫狗洗护、皮毛护理与精致造型，用低敏产品、安抚式流程和干净明亮的空间，给宠物一次舒适的焕新。
           </p>
