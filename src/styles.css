@@ -696,6 +696,21 @@ h3 {
   display: grid;
   gap: 10px;
   margin-top: 28px;
+  max-height: 232px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(25, 49, 46, 0.34) transparent;
+}
+
+.review-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.review-list::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(25, 49, 46, 0.28);
 }
 
 .social-links {
@@ -876,6 +891,10 @@ textarea:focus {
 
   .booking-copy {
     position: static;
+  }
+
+  .review-list {
+    max-height: 206px;
   }
 
   .service-grid,
