@@ -179,6 +179,12 @@ h1 {
   letter-spacing: 0;
 }
 
+.hero-title {
+  max-width: none;
+  white-space: nowrap;
+  font-size: clamp(3.35rem, 5.9vw, 5.7rem);
+}
+
 h2 {
   margin-bottom: 16px;
   font-size: clamp(2rem, 4vw, 3.4rem);
@@ -936,6 +942,10 @@ textarea:focus {
 
   h1 {
     font-size: clamp(2.55rem, 15vw, 4.1rem);
+  }
+
+  .hero-title {
+    font-size: clamp(2.05rem, 11vw, 4.1rem);
   }
 
   .hero,
