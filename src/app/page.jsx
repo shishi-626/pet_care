@@ -221,6 +221,7 @@ const initialForm = {
 export default function Home() {
   const [form, setForm] = useState(initialForm);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
   const [activeSlide, setActiveSlide] = useState(0);
 
@@ -246,7 +247,7 @@ export default function Home() {
     setActiveSlide((current) => (current + step + salonSlides.length) % salonSlides.length);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const nextErrors = {};
 
@@ -256,7 +257,28 @@ export default function Home() {
 
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length === 0) {
-      setSubmitted(true);
+      setIsSubmitting(true);
+      try {
+        const response = await fetch('/api/appointments', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(form),
+        });
+        const result = await response.json();
+
+        if (!response.ok) {
+          setErrors({ form: result.error || '提交失败，请稍后再试' });
+          setSubmitted(false);
+          return;
+        }
+
+        setSubmitted(true);
+      } catch {
+        setErrors({ form: '网络异常，请稍后再试' });
+        setSubmitted(false);
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -491,7 +513,7 @@ export default function Home() {
           <p className="eyebrow">Reservation</p>
           <h2>预约一次轻松的泡泡时间</h2>
           <p>
-            提交后我们会根据宠物状态和门店时段与你确认。当前为前端演示预约，不会产生真实订单。
+            提交后我们会保存预约信息，并根据宠物状态和门店时段与你确认。
           </p>
           <div className="review-list">
             {testimonials.map((quote) => (
@@ -561,10 +583,11 @@ export default function Home() {
             备注
             <textarea name="note" value={form.note} onChange={updateField} placeholder="例如：第一次洗护、害怕吹风、皮肤敏感等" />
           </label>
-          <button className="primary-btn form-submit" type="submit">
+          <button className="primary-btn form-submit" type="submit" disabled={isSubmitting}>
             <CheckCircle2 size={18} />
-            提交预约
+            {isSubmitting ? '提交中...' : '提交预约'}
           </button>
+          {errors.form && <span className="field-error full">{errors.form}</span>}
           {submitted && (
             <div className="success-box" role="status">
               预约已收到：{form.name} 的{form.petType}将在 {form.date} {form.time} 体验「{form.package}」。

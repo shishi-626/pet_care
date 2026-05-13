@@ -249,6 +249,12 @@ h3 {
   transform: translateY(-2px);
 }
 
+.primary-btn:disabled {
+  cursor: wait;
+  opacity: 0.72;
+  transform: none;
+}
+
 .trust-row {
   margin-top: 24px;
 }
